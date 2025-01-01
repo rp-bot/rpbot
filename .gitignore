@@ -1,1 +1,5 @@
 .pytest_cache
+.env
+build
+dist
+rohit_prat_bot.egg-info
