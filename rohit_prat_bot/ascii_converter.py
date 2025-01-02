@@ -5,17 +5,26 @@ from PIL import Image
 def image_to_ascii(image_path, width=None):
     chars = "@%#*+=-:. "  # ASCII characters for brightness levels
 
-    # Get terminal width dynamically if width is not provided
+    # Get terminal dimensions
+    terminal_width, terminal_height = shutil.get_terminal_size()
+
+    # Use the terminal width if `width` is not provided
     if width is None:
-        terminal_width, _ = shutil.get_terminal_size()
         width = terminal_width
 
     img = Image.open(image_path)
 
-    # Resize image maintaining aspect ratio
+    # Resize image maintaining aspect ratio and considering terminal height
     aspect_ratio = img.height / img.width
     # Adjust for terminal's aspect ratio
     new_height = int(aspect_ratio * width * 0.55)
+
+    # Scale down if the image height exceeds the terminal height
+    if new_height > terminal_height - 3:  # Reserve space for controls
+        scale_factor = (terminal_height - 3) / new_height
+        width = int(width * scale_factor)
+        new_height = int(new_height * scale_factor)
+
     img = img.resize((width, new_height))
 
     # Convert image to grayscale
