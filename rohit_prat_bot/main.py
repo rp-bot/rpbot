@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from rohit_prat_bot.ascii_converter import image_to_ascii
 from rohit_prat_bot.navigator import Navigator
 from rich.console import Console
@@ -6,7 +7,8 @@ from rich.console import Console
 
 def main():
     console = Console()
-    image_dir = "images"
+    package_dir = Path(__file__).parent
+    image_dir = package_dir / "images"
     image_paths = [os.path.join(image_dir, f) for f in os.listdir(
         image_dir) if f.endswith(('.jpg', '.png', '.jpeg'))]
 
@@ -21,6 +23,8 @@ def main():
         current_image = navigator.current_image()
         ascii_art = image_to_ascii(current_image)
         console.clear()
+        print("\n")
+
         console.print(ascii_art)
 
         console.print(

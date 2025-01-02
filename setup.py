@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="rohit_prat_bot",
-    version="0.1.0",
+    version="0.2.2",
     author="Rohit Prat",
     author_email="legacy.business18@gmail.com",
     description="A short description of your package",
@@ -16,7 +16,16 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    package_data={
+        "rohit_prat_bot": ["images/*"],
+    },
     install_requires=[
-        # Add your package dependencies here
+        "pillow",
+        "rich",
     ],
+    entry_points={
+        "console_scripts": [
+            "rohit_prat_bot=rohit_prat_bot.main:main",
+        ],
+    },
 )
